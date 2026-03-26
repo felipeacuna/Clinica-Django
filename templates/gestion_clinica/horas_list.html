@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Gestión de Horas Médicas</h2>
+<div class="table-responsive mt-4">
+    <table class="table table-striped">
+        <thead class="table-info">
+            <tr>
+                <th>Paciente</th>
+                <th>Doctor</th>
+                <th>Fecha y Hora</th>
+                <th>Motivo</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for hora in horas %}
+            <tr>
+                <td>{{ hora.paciente }}</td>
+                <td>{{ hora.doctor }}</td>
+                <td>{{ hora.fecha_cita|date:"d/m/Y H:i" }}</td>
+                <td>{{ hora.motivo|truncatechars:30 }}</td>
+                <td>
+                    <a href="{% url 'modificar_hora' hora.id %}" class="btn btn-warning btn-sm">Modificar</a>
+                    <a href="{% url 'eliminar_hora' hora.id %}" class="btn btn-danger btn-sm" onclick="return confirm('¿Eliminar cita?')">Eliminar</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<a href="{% url 'registrar_hora' %}" class="btn btn-success">Agendar Nueva Hora</a>
+{% endblock %}
